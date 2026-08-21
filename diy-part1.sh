@@ -1,5 +1,5 @@
 #!/bin/bash
-git checkout openwrt‑23.05.5
+git checkout openwrt‑23.05.6
 #
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part1.sh
