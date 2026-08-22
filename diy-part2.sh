@@ -20,3 +20,6 @@ define Device/adslr_g7
 endef
 TARGET_DEVICES += adslr_g7
 EOF
+
+
+rm -rf build_dir/target-mipsel_24kc_musl/luci-base
