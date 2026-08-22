@@ -40,7 +40,7 @@
 	};
 
 	chosen {
-		bootargs = "console=ttyS0,57600";
+		bootargs = "console=ttyS0,57600 root=/dev/mtdblock4 rootfstype=squashfs,jffs2";
 	};
 
 	pll {
