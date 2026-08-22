@@ -18,6 +18,7 @@ define Device/adslr_g7
   SUPPORTED_DEVICES := adslr_g7
   USE_FIT := 0
   KERNEL_LOADADDR := 0x80001000
+  IMAGE_SIZE := 15040k
 endef
 TARGET_DEVICES += adslr_g7
 EOF
