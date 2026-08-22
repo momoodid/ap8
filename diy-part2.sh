@@ -22,3 +22,6 @@ define Device/adslr_g7
 endef
 TARGET_DEVICES += adslr_g7
 EOF
+
+# 3.为设备 adslr_g7 启用 lzma-loader，修复 LZMA ERROR 1 问题
+sed -i '/^define Device\/adslr_g7$/,/^endef$/ s/^\([[:space:]]*\)DEVICE_VENDOR/\1$(Device\/uimage-lzma-loader)\n&/' target/linux/ramips/image/mt7621.mk
