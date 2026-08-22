@@ -19,6 +19,7 @@ define Device/adslr_g7
   USE_FIT := 0
   KERNEL_LOADADDR := 0x80001000
   IMAGE_SIZE := 15040k
+  DEVICE_CMDLINE := console=ttyS0,57600 root=/dev/mtdblock4 rootfstype=squashfs,jffs2
 endef
 TARGET_DEVICES += adslr_g7
 EOF
