@@ -3,7 +3,7 @@
 / {
 	#address-cells = <0x01>;
 	#size-cells = <0x01>;
-	compatible = "adslr,g7", "mediatek,mt7621-soc";
+	compatible = "adslr_g7", "mediatek,mt7621-soc";
 	model = "ADSLR G7";
 
 	aliases {
