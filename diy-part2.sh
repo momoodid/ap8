@@ -12,7 +12,7 @@ define Device/adslr_g7
   SUPPORTED_DEVICES := adslr_g7
   USE_FIT := 0
   KERNEL_LOADADDR := 0x80001000
-  IMAGE_SIZE := 15040k
+  IMAGE_SIZE := 16000k
   DEVICE_CMDLINE := console=ttyS0,57600 root=/dev/mtdblock4 rootfstype=squashfs,jffs2
   KERNEL := kernel-bin | append-dtb | lzma-loader | uImage none
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma-loader | uImage none
