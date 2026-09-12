@@ -4,8 +4,7 @@
 # Description: OpenWrt DIY script part 1 (Before Update feeds)
 #
 
-# 添加 helloworld feed（代理插件）
-echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
-
-# 如果 GitHub 拉取慢，可以取消下面这行的注释，用镜像加速
-# sed -i 's/github.com/ghproxy.com\/https:\/\/github.com/g' feeds.conf.default
+# Lean 源码已内置 helloworld，无需重复添加
+# 如需其他 feed，取消下面对应行的注释
+# echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
+# echo 'src-git small https://github.com/kenzok8/small' >>feeds.conf.default
