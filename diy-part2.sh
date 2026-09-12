@@ -5,7 +5,7 @@
 #
 
 # 复制 DTS 到源码目录
-cp -f ./adslr_g7.dts target/linux/ramips/dts/
+cp -f "${GITHUB_WORKSPACE}/adslr_g7.dts" target/linux/ramips/dts/
 
 # 追加 ADSLR G7 设备定义到 mt7621.mk
 cat >> target/linux/ramips/image/mt7621.mk << 'EOF'
