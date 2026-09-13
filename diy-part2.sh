@@ -18,6 +18,8 @@ define Device/adslr_g7
   SUPPORTED_DEVICES := adslr_g7
   USE_FIT := 0
   KERNEL_LOADADDR := 0x80001000
+  KERNEL := kernel-bin | append-dtb | uImage none
+  KERNEL_INITRAMFS := kernel-bin | append-dtb | uImage none
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata
 endef
 TARGET_DEVICES += adslr_g7
