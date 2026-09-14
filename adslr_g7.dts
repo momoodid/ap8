@@ -8,7 +8,6 @@
 	compatible = "adslr,g7", "mediatek,mt7621-soc";
 	model = "ADSLR G7";
 
-	/* --------新增：128MB内存节点（来自AP8221）-------- */
 	memory@0 {
 		device_type = "memory";
 		reg = <0x0 0x8000000>;
@@ -23,14 +22,12 @@
 		led-failsafe = &led_power;
 		led-running = &led_power;
 		led-upgrade = &led_boot;
-		label-mac-device = &gmac0;
 	};
 
 	keys {
 		compatible = "gpio-keys";
 		reset {
 			label = "reset";
-			/* &gpio → 修改为 &gpio0，GPIO18复位按键，LOW电平按下 */
 			gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
 			debounce-interval = <60>;
 			linux,code = <KEY_RESTART>;
@@ -39,19 +36,19 @@
 
 	leds {
 		compatible = "gpio-leds";
-		/* power绿灯 GPIO24 */
+
 		led_power: power {
 			label = "green:power";
 			gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
 			default-state = "on";
 		};
-		/* boot红灯 GPIO23 */
+
 		led_boot: boot {
 			label = "red:boot";
 			gpios = <&gpio0 23 GPIO_ACTIVE_LOW>;
 			default-state = "off";
 		};
-		/* upgrade蓝灯 GPIO15 */
+
 		led_upgrade: upgrade {
 			label = "blue:upgrade";
 			gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
@@ -60,7 +57,6 @@
 	};
 };
 
-/* --------SPI‑NOR Flash MX25L25645，所有分区全部放在flash@0内，分区偏移完全保留G7原厂-------- */
 &spi0 {
 	status = "okay";
 
@@ -87,24 +83,6 @@
 				label = "Factory";
 				reg = <0x040000 0x010000>;
 				read-only;
-				/* --------新增nvmem‑layout，导出eeprom、mac地址，无线/网口自动读取，不会随机MAC-------- */
-				nvmem-layout {
-					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
-					eeprom_factory_0: eeprom@0 {
-						reg = <0x0 0x4da8>;
-					};
-					macaddr_factory_4: macaddr@4 {
-						reg = <0x4 0x6>;
-					};
-					macaddr_factory_e000: macaddr@e000 {
-						reg = <0xe000 0x6>;
-					};
-					macaddr_factory_e006: macaddr@e006 {
-						reg = <0xe006 0x6>;
-					};
-				};
 			};
 			partition@50000 {
 				label = "Bootloader2";
@@ -138,62 +116,34 @@
 	};
 };
 
-/* --------下面硬件片段全部照搬AP8221-------- */
 &pcie {
 	status = "okay";
 };
 
 &pcie0 {
-	wifi@0,0 {
-		compatible = "mediatek,mt76";
+	mt76@0,0 {
 		reg = <0x0000 0 0 0 0>;
-		nvmem-cells = <&eeprom_factory_0>, <&macaddr_factory_4>;
-		nvmem-cell-names = "eeprom", "mac-address";
+		mediatek,mtd-eeprom = <&factory 0x0>;
+		ieee80211-freq-limit = <2400000 2500000>;
 	};
 };
 
-&gmac0 {
-	nvmem-cells = <&macaddr_factory_e000>;
-	nvmem-cell-names = "mac-address";
-};
-
-&gmac1 {
-	status = "okay";
-	label = "wan";
-	nvmem-cells = <&macaddr_factory_e006>;
-	nvmem-cell-names = "mac-address";
-};
-
-&switch0 {
-	status = "okay";
-	mediatek,mcm;
-	ports {
-		port@1 {
-			status = "okay";
-			label = "lan1";
-		};
-		port@2 {
-			status = "okay";
-			label = "lan2";
-		};
-		port@3 {
-			status = "okay";
-			label = "lan3";
-		};
-		port@4 {
-			status = "okay";
-			label = "lan4";
-		};
+&pcie1 {
+	mt76@0,0 {
+		reg = <0x0000 0 0 0 0>;
+		mediatek,mtd-eeprom = <&factory 0x8000>;
+		ieee80211-freq-limit = <5000000 6000000>;
 	};
+};
+
+&ethernet {
+	mtd-mac-address = <&factory 0xe000>;
+};
+
+&gsw {
+	mediatek,portmap = <0x11>;
 };
 
 &xhci {
 	status = "okay";
-};
-
-&state_default {
-	gpio {
-		groups = "i2c", "jtag";
-		function = "gpio";
-	};
 };
