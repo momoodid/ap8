@@ -58,62 +58,38 @@
 
 &spi0 {
 	status = "okay";
-
 	flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0>;
 		spi-max-frequency = <10000000>;
-
 		partitions {
 			compatible = "fixed-partitions";
 			#address-cells = <1>;
 			#size-cells = <1>;
 
 			partition@0 {
-				label = "Bootloader";
+				label = "u-boot";
 				reg = <0x000000 0x030000>;
 				read-only;
 			};
 			partition@30000 {
-				label = "Config";
+				label = "u-boot-env";
 				reg = <0x030000 0x010000>;
 			};
 			factory: partition@40000 {
-				label = "Factory";
+				label = "factory";
 				reg = <0x040000 0x010000>;
 				read-only;
 			};
 			partition@50000 {
-				label = "Bootloader2";
-				reg = <0x050000 0x030000>;
-				read-only;
-			};
-			partition@80000 {
 				compatible = "denx,uimage";
 				label = "firmware";
-				reg = <0x080000 0xF00000>;
-			};
-			partition@f80000 {
-				label = "rootfs_data";
-				reg = <0xF80000 0x160000>;
-			};
-			partition@10e0000 {
-				label = "firmware2";
-				reg = <0x10E0000 0xF00000>;
-			};
-			partition@1fe0000 {
-				label = "BoardInfo";
-				reg = <0x1FE0000 0x010000>;
-				read-only;
-			};
-			partition@1ff0000 {
-				label = "RebootCause";
-				reg = <0x1FF0000 0x010000>;
-				read-only;
+				reg = <0x050000 0x1FB0000>;
 			};
 		};
 	};
 };
+
 
 &pcie {
 	status = "okay";
